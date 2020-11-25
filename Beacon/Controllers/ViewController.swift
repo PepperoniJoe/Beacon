@@ -23,11 +23,9 @@ class ViewController: UIViewController {
     @IBOutlet var segmentMinor       : UISegmentedControl!
     @IBOutlet var labelBeaconID      : UILabel!
 
-    
-    var beaconRegion : CLBeaconRegion?
+    var beaconRegion : CLBeaconRegion!
     var timer        : Timer!
     var scale        : CGFloat = 1.0
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,14 +43,24 @@ class ViewController: UIViewController {
     @IBAction func pickedSelectors(_ sender: UISegmentedControl) {
         beaconRegion = createBeaconRegion(major: CLBeaconMajorValue(segmentMajor.selectedSegmentIndex + 1),
                                           minor: CLBeaconMinorValue(segmentMinor.selectedSegmentIndex + 1))
-        stopAdvertising()
-        advertise()
+        startAdvertising()
     }
     
+    
+    @IBAction func touchBeacon(_ sender: Any) {
+        
+//        if beaconSignalButton.title(for: .normal) == K.transmitting {
+        if labelBeacon.text == K.transmitting {
+            stopAdvertising()
+        } else {
+            startAdvertising()
+        }
+    }
+    
+    
     func setupPulse(view: UIView) {
+        
         pulseGraphic.position = CGPoint(x: view.frame.size.width / 2 , y: view.frame.size.height / 2)
-
-        print("Position:", pulseGraphic.position)
         pulseGraphic.numPulse          = K.numPulse
         pulseGraphic.radius            = K.radius
         pulseGraphic.animationDuration = K.animationDuration
@@ -62,36 +70,48 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func startBeacon(_ sender: Any) {
-
-   //     print("title", String(beaconSignalButton.title(for: .normal) ?? "Unknown Title"))
-        
-        if beaconSignalButton.title(for: .normal) == "Transmitting" {
-            stopAdvertising()
-//            beaconSignalButton.setTitle("Start Beacon", for: .normal)
-//            peripheralManager.stopAdvertising()
-        } else {
-            advertise()
-//            pulseGraphic.start()
-//            beaconSignalButton.setTitle("Advertising", for: .normal)
-        }
-    }
-    
     func stopAdvertising() {
-        labelBeacon.text = ""
-        pulseGraphic.stop()
-        peripheralManager.stopAdvertising()
+        
+        labelBeacon.text = K.nothing
+        
+        if pulseGraphic.pulse.isAnimating() == true {
+            pulseGraphic.stop()
+        }
+
+        if peripheralManager.isAdvertising {
+            peripheralManager.stopAdvertising()
+        }
     }
     
-    func advertise() {
+    
+    func startAdvertising() {
+        
+        guard let beaconRegion = beaconRegion else { return }
+        
+        labelBeacon.text = K.transmitting
+        
         if peripheralManager.state == .poweredOn {
-            if let beaconRegion = beaconRegion {
-                print("advertising")
-                advertiseDevice(region: beaconRegion)
-                pulseGraphic.start()
-                labelBeacon.text = "Transmitting"
-            }
+            advertiseDevice(region: beaconRegion)
+        } else {
+            print("Device does not have bluetooth powered on. Note: Simulators do not support bluetooth functionality. This app should be run on a real device.")
         }
+    }
+    
+    
+    func advertiseDevice(region : CLBeaconRegion) {
+        
+        if pulseGraphic.pulse.isAnimating() == false {
+            pulseGraphic.start()
+        }
+        
+        let peripheralData = region.peripheralData(withMeasuredPower: nil) as? [String : Any]
+        
+        if peripheralManager.isAdvertising {
+            peripheralManager.stopAdvertising()
+        }
+        
+        peripheralManager.startAdvertising(peripheralData)
+        print("advertising")
     }
     
     
@@ -99,21 +119,16 @@ class ViewController: UIViewController {
         
         guard let proximityUUID = UUID(uuidString: K.uuid) else { return nil }
         
-        let beaconID                  = K.beaconID
-        uuid.text                     = K.uuid
-        labelBeaconID.text            = K.beaconID
+        let beaconID       = K.beaconID
+        uuid.text          = K.uuid
+        labelBeaconID.text = K.beaconID
         
         return CLBeaconRegion(proximityUUID: proximityUUID,
                               major        : major,
                               minor        : minor,
                               identifier   : beaconID)
     }
-    
-    
-    func advertiseDevice(region : CLBeaconRegion) {
-        let peripheralData = region.peripheralData(withMeasuredPower: nil)
-        peripheralManager.startAdvertising(((peripheralData as NSDictionary) as? [String : Any]))
-    }
+
     
 } // end of ViewController
 
@@ -127,15 +142,14 @@ extension ViewController: CBPeripheralManagerDelegate {
             case .resetting:
                 print("resetting")
             case .unsupported:
-                print("unsupported")
+                print("The device running this app does not support bluetooth.")
             case .unauthorized:
                 print("unauthorized")
             case .poweredOff:
-                print("poweredOff")
+                print("Bluetooth powered Off")
                 peripheralManager.stopAdvertising()
             case .poweredOn:
-                print("poweredOn")
-                //advertise()
+                print("Bluetooth powered on")
             default:
                 print("❌ Check for additional cases of state on CBCentralManager ")
         }

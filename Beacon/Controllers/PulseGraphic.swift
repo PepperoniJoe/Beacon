@@ -22,7 +22,6 @@ class PulseGraphic: CAReplicatorLayer {
     private weak var prevSuperlayer: CALayer?
     private var prevLayerIndex: Int?
 
-    
     override var backgroundColor: CGColor? {
         didSet {
             pulse.backgroundColor = backgroundColor
@@ -174,9 +173,9 @@ class PulseGraphic: CAReplicatorLayer {
             addSublayer(pulse)
         }
         
-        let isAnimating = pulse.animation(forKey: K.pulseAnimationKey) != nil
+//        let isAnimating = pulse.animation(forKey: K.pulseAnimationKey) != nil
 
-        if let animationGroup = animationGroup, !isAnimating {
+        if let animationGroup = animationGroup, pulse.isAnimating() == false {
             pulse.add(animationGroup, forKey: K.pulseAnimationKey)
         }
     }
@@ -184,6 +183,9 @@ class PulseGraphic: CAReplicatorLayer {
     
     /// Start the animation.
     func start() {
+        
+        guard pulse.isAnimating() == false else { return }
+        
         setupPulse()
         setupAnimationGroup()
         pulse.add(animationGroup, forKey: K.pulseAnimationKey)
@@ -196,11 +198,8 @@ class PulseGraphic: CAReplicatorLayer {
         animationGroup = nil
     }
     
-
     
     // MARK: - Private Methods
-    
-    
     private func setupPulse() {
         pulse.contentsScale = screenScale
         pulse.opacity = 0

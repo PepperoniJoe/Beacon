@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		93339D7D256C8BD20083CB4D /* Exhibits.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93339D7C256C8BD20083CB4D /* Exhibits.xcassets */; };
+		934B5DC9256D8F7600AC529C /* Ext-UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934B5DC8256D8F7600AC529C /* Ext-UIView.swift */; };
 		93643B1425675A9E00027DE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93643B1325675A9E00027DE6 /* LaunchScreen.storyboard */; };
 		93643B3E256A066E00027DE6 /* PulseGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93643B3D256A066E00027DE6 /* PulseGraphic.swift */; };
 		93643B46256A0C6A00027DE6 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93643B45256A0C6A00027DE6 /* Constant.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		93339D7C256C8BD20083CB4D /* Exhibits.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Exhibits.xcassets; sourceTree = "<group>"; };
+		934B5DC8256D8F7600AC529C /* Ext-UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext-UIView.swift"; sourceTree = "<group>"; };
 		93643B1325675A9E00027DE6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93643B3D256A066E00027DE6 /* PulseGraphic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseGraphic.swift; sourceTree = "<group>"; };
 		93643B45256A0C6A00027DE6 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -41,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		934B5DCB256D8F7A00AC529C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				934B5DC8256D8F7600AC529C /* Ext-UIView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		93643B40256A0BF400027DE6 /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +117,7 @@
 				93643B44256A0C5000027DE6 /* Data */,
 				93643B40256A0BF400027DE6 /* Root */,
 				93643B43256A0C3500027DE6 /* Controllers */,
+				934B5DCB256D8F7A00AC529C /* Extensions */,
 				93643B42256A0C2500027DE6 /* Storyboard */,
 				93643B41256A0C0600027DE6 /* Assets */,
 			);
@@ -188,6 +199,7 @@
 				93643B3E256A066E00027DE6 /* PulseGraphic.swift in Sources */,
 				93AE8F5E255F899D00C859B6 /* ViewController.swift in Sources */,
 				93AE8F5C255F899D00C859B6 /* AppDelegate.swift in Sources */,
+				934B5DC9256D8F7600AC529C /* Ext-UIView.swift in Sources */,
 				93643B46256A0C6A00027DE6 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
