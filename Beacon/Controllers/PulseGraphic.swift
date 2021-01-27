@@ -2,33 +2,39 @@
 //  PulseGraphic.swift
 //  Beacon
 //
-//  Based on Pulsator by 
+//  Based on Pulsator by Shuichi Tsutsumi, Tokyo Japan
 
 import UIKit
     
 class PulseGraphic: CAReplicatorLayer {
     
     let pulse = CALayer()
+
+    var numPulse: Int = 1 {
+        didSet {
+            instanceCount = numPulse
+            updateInstanceDelay()
+        }
+    }
+    
+    var radius: CGFloat = 60
+    var animationDuration: TimeInterval = K.animationDuration
+    
+    //MARK: - Private Properties
     private var animationGroup: CAAnimationGroup!
     private var alpha: CGFloat = 0.45
-    
     private let screenScale = UIScreen.main.scale
     private let applicationWillBecomeActiveNotfication = UIApplication.willEnterForegroundNotification
     private let applicationDidResignActiveNotification = UIApplication.didEnterBackgroundNotification
-    
-    /// private properties for resuming
     private weak var prevSuperlayer: CALayer?
     private var prevLayerIndex: Int?
-
+    private var animationCompletionBlock: (() -> ())?
+    
     override var backgroundColor: CGColor? {
         didSet {
             pulse.backgroundColor = backgroundColor
             guard let backgroundColor = backgroundColor else {return}
-            let oldAlpha = alpha
             alpha = backgroundColor.alpha
-            if alpha != oldAlpha {
-                recreate()
-            }
         }
     }
     
@@ -41,61 +47,27 @@ class PulseGraphic: CAReplicatorLayer {
         }
     }
     
-    
-    var animationCompletionBlock: (()->Void)?
-    
-    /// The number of pulse.
-    var numPulse: Int = 1 {
-        didSet {
-            if numPulse < 1 {
-                numPulse = 1
-            }
-            instanceCount = numPulse
-            updateInstanceDelay()
-        }
-    }
-    
-    ///    The radius of pulse.
-    var radius: CGFloat = 60 {
-        didSet {
-            updatePulse()
-        }
-    }
-    
-    /// The animation duration in seconds.
-    var animationDuration: TimeInterval = K.animationDuration {
-        didSet {
-            updateInstanceDelay()
-        }
-    }
-    
-    /// If this property is `true`, the instanse will be automatically removed
+
+    /// If this property is `true`, the instance will be automatically removed
     /// from the superview, when it finishes the animation.
-    var autoRemove = false
+    private var autoRemove = true
     
     /// fromValue for radius
     /// It must be smaller than 1.0
-    var fromValueForRadius: Float = 0.0 {
+    private var fromValueForRadius: Float = 0.0 {
         didSet {
             if fromValueForRadius >= 1.0 {
                 fromValueForRadius = 0.0
             }
-            recreate()
+          //  recreate()
         }
     }
     
-    /// The value of this property should be ranging from @c 0 to @c 1 (exclusive).
-    var keyTimeForHalfOpacity: Float = 0.2 {
-        didSet {
-            recreate()
-        }
-    }
-    
-    /// The animation interval in seconds.
-    var pulseInterval: TimeInterval = 0
+    private var keyTimeForHalfOpacity: Float = 0.2
+    private var pulseInterval: TimeInterval = 0
     
     /// A function describing a timing curve of the animation.
-    var timingFunction: CAMediaTimingFunction? = CAMediaTimingFunction(name: .default) {
+    private var timingFunction: CAMediaTimingFunction? = CAMediaTimingFunction(name: .default) {
         didSet {
             if let animationGroup = animationGroup {
                 animationGroup.timingFunction = timingFunction
@@ -105,13 +77,14 @@ class PulseGraphic: CAReplicatorLayer {
     
     
     /// The value of this property showed a pulse is started
-    var isPulsating: Bool {
+    private var isPulsating: Bool {
         guard let keys = pulse.animationKeys() else { return false }
         return keys.count > 0
     }
     
     
     // MARK: - Initializers
+    
     override init() {
         super.init()
         
@@ -132,28 +105,24 @@ class PulseGraphic: CAReplicatorLayer {
                                                object: nil)
     }
     
-    
     override init(layer: Any) {
         super.init(layer: layer)
     }
     
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+       super.init(coder: aDecoder)
     }
-    
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     override func removeFromSuperlayer() {
         super.removeFromSuperlayer()
         stop()
         NotificationCenter.default.removeObserver(self)
     }
-    
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     
     @objc func save() {
         prevSuperlayer = superlayer
@@ -219,9 +188,11 @@ class PulseGraphic: CAReplicatorLayer {
         animationGroup.animations  = [scaleAnimation, opacityAnimation]
         animationGroup.duration    = animationDuration + pulseInterval
         animationGroup.repeatCount = repeatCount
+        
         if let timingFunction = timingFunction {
             animationGroup.timingFunction = timingFunction
         }
+        
         animationGroup.delegate = self
     }
     
@@ -243,23 +214,7 @@ class PulseGraphic: CAReplicatorLayer {
         guard numPulse >= 1 else { fatalError() }
         instanceDelay = (animationDuration + pulseInterval) / Double(numPulse)
     }
-    
-    
-    private func recreate() {
-        
-        guard animationGroup != nil else { return }
-        
-        stop()
-        
-        let endTime = DispatchTime.now() + Double(Int64(0.2 * double_t(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-        
-        DispatchQueue.main.asyncAfter(deadline: endTime) { () -> Void in
-            self.start()
-        }
-    }
 
-
-    
 } // end of PulseGraphic
 
 
