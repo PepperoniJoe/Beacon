@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +19,7 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beacon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHG-0F-7vd">
                                 <rect key="frame" x="0.0" y="79" width="414" height="53"/>
-                                <color key="backgroundColor" red="0.0" green="0.43756565450000001" blue="0.51285046339999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="DefaultColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="44"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -30,8 +31,8 @@
                                     <constraint firstAttribute="width" constant="150" id="pga-lu-Rsq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="25"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="Button2"/>
+                                <color key="tintColor" name="DefaultColor"/>
+                                <state key="normal" image="BeaconBall"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <integer key="value" value="75"/>
@@ -46,7 +47,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Py-L9-EZQ">
                                         <rect key="frame" x="0.0" y="0.0" width="404" height="6"/>
-                                        <color key="backgroundColor" red="0.0" green="0.4371328652" blue="0.51308745150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="DefaultColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="6" id="Mdx-A5-tjJ"/>
                                         </constraints>
@@ -60,7 +61,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UUID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2g9-ho-6d1">
                                                         <rect key="frame" x="0.0" y="0.0" width="80" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" red="0.0" green="0.4371328652" blue="0.51308745150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="DefaultColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Beacon ID" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="58l-eb-hvh">
@@ -69,26 +70,26 @@
                                                             <constraint firstAttribute="width" constant="80" id="nY5-qX-N4q"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" red="0.0" green="0.4371328652" blue="0.51308745150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="DefaultColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Major" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yhJ-1N-HBx">
                                                         <rect key="frame" x="0.0" y="80" width="80" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" red="0.0" green="0.39285069700000003" blue="0.4614005685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="DefaultColor2"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minor" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4Mp-o7-NA4">
                                                         <rect key="frame" x="0.0" y="120" width="80" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" red="0.0" green="0.4371328652" blue="0.51308745150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="DefaultColor2"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-Av-HeC">
                                                 <rect key="frame" x="91" y="0.0" width="2" height="160"/>
-                                                <color key="backgroundColor" red="0.0" green="0.40127462149999998" blue="0.46919280289999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="DefaultColor2"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="2" id="RK8-5W-4N7"/>
                                                 </constraints>
@@ -102,13 +103,13 @@
                                                             <constraint firstAttribute="height" constant="40" id="Ac6-nq-7M1"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" red="0.0" green="0.44705882352941173" blue="0.51764705882352935" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="DefaultColor2"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fW-ez-dbt">
                                                         <rect key="frame" x="0.0" y="40" width="300" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" red="0.0" green="0.4371328652" blue="0.51308745150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="textColor" name="DefaultColor2"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Unk-jI-4yy">
@@ -119,7 +120,7 @@
                                                             <segment title="Room 3"/>
                                                             <segment title="Room 4"/>
                                                         </segments>
-                                                        <color key="tintColor" red="0.0" green="0.40127462149999998" blue="0.46919280289999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="tintColor" name="DefaultColor"/>
                                                         <connections>
                                                             <action selector="pickedSelectors:" destination="BYZ-38-t0r" eventType="valueChanged" id="j2k-ha-da2"/>
                                                         </connections>
@@ -131,7 +132,7 @@
                                                             <segment title="Exhibit 2"/>
                                                             <segment title="Exhibit 3"/>
                                                         </segments>
-                                                        <color key="tintColor" red="0.0" green="0.40127462149999998" blue="0.46919280289999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="tintColor" name="DefaultColor"/>
                                                         <connections>
                                                             <action selector="pickedSelectors:" destination="BYZ-38-t0r" eventType="valueChanged" id="uxg-ib-3ob"/>
                                                         </connections>
@@ -142,7 +143,7 @@
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCx-ya-bNm">
                                         <rect key="frame" x="0.0" y="166" width="404" height="6"/>
-                                        <color key="backgroundColor" red="0.0" green="0.4371328652" blue="0.51308745150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" name="DefaultColor2"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="6" id="Efc-u8-AIh"/>
                                         </constraints>
@@ -188,6 +189,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Button2" width="618" height="618"/>
+        <image name="BeaconBall" width="200" height="200"/>
+        <namedColor name="DefaultColor">
+            <color red="0.0" green="0.43799999356269836" blue="0.5130000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="DefaultColor2">
+            <color red="0.0" green="0.43799999356269836" blue="0.5130000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

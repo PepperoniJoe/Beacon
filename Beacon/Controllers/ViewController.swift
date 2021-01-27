@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     let peripheralManager = CBPeripheralManager()
     let pulseGraphic      = PulseGraphic()
+    let alertManager      = AlertManager()
 
     @IBOutlet var labelBeacon        : UILabel!
     @IBOutlet var beaconSignalButton : UIButton!
@@ -26,50 +27,80 @@ class ViewController: UIViewController {
     var beaconRegion : CLBeaconRegion!
     var timer        : Timer!
     var scale        : CGFloat = 1.0
+    var didNotify    : Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupBeacon()
+        setupPulse(view: beaconSignalButton)
+     //   setupSVG()
         peripheralManager.delegate = self
     }
     
-    func setup() {
-        segmentMajor.selectedSegmentIndex = 0
-        segmentMinor.selectedSegmentIndex = 0
-        beaconRegion = createBeaconRegion(major: K.major, minor: K.minor)
-        setupPulse(view: beaconSignalButton)
-    }
-    
+    //MARK: - IBActions
+    /// Switch segment control
     @IBAction func pickedSelectors(_ sender: UISegmentedControl) {
-        beaconRegion = createBeaconRegion(major: CLBeaconMajorValue(segmentMajor.selectedSegmentIndex + 1),
-                                          minor: CLBeaconMinorValue(segmentMinor.selectedSegmentIndex + 1))
+        beaconRegion = createBeaconRegion(uuid       : K.uuid,
+                                          major      : CLBeaconMajorValue(segmentMajor.selectedSegmentIndex + 1),
+                                          minor      : CLBeaconMinorValue(segmentMinor.selectedSegmentIndex + 1),
+                                          identifier : K.beaconID)
         startAdvertising()
     }
     
     
+    /// Switch beacon on and off
     @IBAction func touchBeacon(_ sender: Any) {
-        
-//        if beaconSignalButton.title(for: .normal) == K.transmitting {
-        if labelBeacon.text == K.transmitting {
-            stopAdvertising()
-        } else {
-            startAdvertising()
-        }
+        labelBeacon.text == K.transmitting ? stopAdvertising() : startAdvertising()
     }
     
     
+    /// Initialize beacon
+    func setupBeacon() {
+        
+        segmentMajor.selectedSegmentIndex = 0
+        segmentMinor.selectedSegmentIndex = 0
+        
+        beaconRegion = createBeaconRegion(uuid: K.uuid, major: K.major, minor: K.minor, identifier: K.beaconID )
+  
+    }
+    
+    
+    /// Set up pulse based on provided settings
     func setupPulse(view: UIView) {
         
         pulseGraphic.position = CGPoint(x: view.frame.size.width / 2 , y: view.frame.size.height / 2)
         pulseGraphic.numPulse          = K.numPulse
         pulseGraphic.radius            = K.radius
         pulseGraphic.animationDuration = K.animationDuration
-        pulseGraphic.backgroundColor   = K.backgroundColor
+        pulseGraphic.backgroundColor   = UIColor(named: K.defaultColor)?.cgColor
         
         view.layer.addSublayer(pulseGraphic)
     }
     
     
+    /// Start Advertising
+    func startAdvertising() {
+        
+        guard let beaconRegion = beaconRegion else { return }
+        
+        labelBeacon.text = K.transmitting
+        
+        if peripheralManager.state == .poweredOn {
+            advertiseDevice(region: beaconRegion)
+        } else {
+            #if targetEnvironment(simulator)
+            didNotify == false ? alertManager.showAlert(self, message: K.simulator) : print(K.simulator)
+            didNotify = true
+            #else
+            alertManager.showAlert(self, message: K.noBluetooth)
+            print(K.noBluetooth)
+            #endif
+        }
+    }
+    
+    
+    /// Stop advertising
     func stopAdvertising() {
         
         labelBeacon.text = K.nothing
@@ -84,20 +115,8 @@ class ViewController: UIViewController {
     }
     
     
-    func startAdvertising() {
-        
-        guard let beaconRegion = beaconRegion else { return }
-        
-        labelBeacon.text = K.transmitting
-        
-        if peripheralManager.state == .poweredOn {
-            advertiseDevice(region: beaconRegion)
-        } else {
-            print("Device does not have bluetooth powered on. Note: Simulators do not support bluetooth functionality. This app should be run on a real device.")
-        }
-    }
     
-    
+/// Advertise device using peripheral manager
     func advertiseDevice(region : CLBeaconRegion) {
         
         if pulseGraphic.pulse.isAnimating() == false {
@@ -111,16 +130,16 @@ class ViewController: UIViewController {
         }
         
         peripheralManager.startAdvertising(peripheralData)
-        print("advertising")
     }
     
     
-    func createBeaconRegion(major: CLBeaconMajorValue, minor: CLBeaconMinorValue) -> CLBeaconRegion? {
+/// Create beacon region based on provided details
+    func createBeaconRegion(uuid: String, major: CLBeaconMajorValue, minor: CLBeaconMinorValue, identifier: String) -> CLBeaconRegion? {
         
         guard let proximityUUID = UUID(uuidString: K.uuid) else { return nil }
         
+        self.uuid.text     = uuid
         let beaconID       = K.beaconID
-        uuid.text          = K.uuid
         labelBeaconID.text = K.beaconID
         
         return CLBeaconRegion(proximityUUID: proximityUUID,
@@ -129,10 +148,10 @@ class ViewController: UIViewController {
                               identifier   : beaconID)
     }
 
-    
 } // end of ViewController
 
 
+/// 
 extension ViewController: CBPeripheralManagerDelegate {
     func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         
@@ -142,7 +161,8 @@ extension ViewController: CBPeripheralManagerDelegate {
             case .resetting:
                 print("resetting")
             case .unsupported:
-                print("The device running this app does not support bluetooth.")
+                alertManager.showAlert(self, message: K.noBluetoothSupport )
+                print(K.noBluetoothSupport)
             case .unauthorized:
                 print("unauthorized")
             case .poweredOff:

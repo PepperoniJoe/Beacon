@@ -2,22 +2,20 @@
 //  PulseGraphic.swift
 //  Beacon
 //
-//  Created by Marcy Vernon on 11/21/20.
-//  Copyright © 2020 Marcy Vernon. All rights reserved.
-//
+//  Based on Pulsator by 
 
 import UIKit
-import QuartzCore
     
 class PulseGraphic: CAReplicatorLayer {
     
     let pulse = CALayer()
-    var animationGroup: CAAnimationGroup!
-    var alpha: CGFloat = 0.45
+    private var animationGroup: CAAnimationGroup!
+    private var alpha: CGFloat = 0.45
     
     private let screenScale = UIScreen.main.scale
     private let applicationWillBecomeActiveNotfication = UIApplication.willEnterForegroundNotification
     private let applicationDidResignActiveNotification = UIApplication.didEnterBackgroundNotification
+    
     /// private properties for resuming
     private weak var prevSuperlayer: CALayer?
     private var prevLayerIndex: Int?
@@ -65,7 +63,7 @@ class PulseGraphic: CAReplicatorLayer {
     }
     
     /// The animation duration in seconds.
-    var animationDuration: TimeInterval = 3 {
+    var animationDuration: TimeInterval = K.animationDuration {
         didSet {
             updateInstanceDelay()
         }
@@ -113,7 +111,7 @@ class PulseGraphic: CAReplicatorLayer {
     }
     
     
-    // MARK: - Initializer
+    // MARK: - Initializers
     override init() {
         super.init()
         
@@ -121,13 +119,13 @@ class PulseGraphic: CAReplicatorLayer {
         
         instanceDelay = 1
         repeatCount = MAXFLOAT
-        backgroundColor = K.backgroundColor
+        backgroundColor = UIColor(named: K.defaultColor)?.cgColor
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(save),
                                                name: applicationDidResignActiveNotification,
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(resume),
                                                name: applicationWillBecomeActiveNotfication,
@@ -172,8 +170,6 @@ class PulseGraphic: CAReplicatorLayer {
         if pulse.superlayer == nil {
             addSublayer(pulse)
         }
-        
-//        let isAnimating = pulse.animation(forKey: K.pulseAnimationKey) != nil
 
         if let animationGroup = animationGroup, pulse.isAnimating() == false {
             pulse.add(animationGroup, forKey: K.pulseAnimationKey)
@@ -243,19 +239,21 @@ class PulseGraphic: CAReplicatorLayer {
     
     
     private func updateInstanceDelay() {
+        /// division-by-zero check
         guard numPulse >= 1 else { fatalError() }
         instanceDelay = (animationDuration + pulseInterval) / Double(numPulse)
     }
     
     
     private func recreate() {
+        
         guard animationGroup != nil else { return }
         
         stop()
         
-        let when = DispatchTime.now() + Double(Int64(0.2 * double_t(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        let endTime = DispatchTime.now() + Double(Int64(0.2 * double_t(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         
-        DispatchQueue.main.asyncAfter(deadline: when) { () -> Void in
+        DispatchQueue.main.asyncAfter(deadline: endTime) { () -> Void in
             self.start()
         }
     }
