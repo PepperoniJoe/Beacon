@@ -11,6 +11,7 @@
 		934B5DC9256D8F7600AC529C /* Ext-UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934B5DC8256D8F7600AC529C /* Ext-UIView.swift */; };
 		9351F0B32572F32A0009A798 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351F0B22572F32A0009A798 /* AlertManager.swift */; };
 		9363832025C133F6003285EC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 9363831E25C133F6003285EC /* LICENSE */; };
+		9363834225C28E45003285EC /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9363834125C28E44003285EC /* BeaconManager.swift */; };
 		93643B1425675A9E00027DE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93643B1325675A9E00027DE6 /* LaunchScreen.storyboard */; };
 		93643B3E256A066E00027DE6 /* PulseGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93643B3D256A066E00027DE6 /* PulseGraphic.swift */; };
 		93643B46256A0C6A00027DE6 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93643B45256A0C6A00027DE6 /* Constant.swift */; };
@@ -25,6 +26,7 @@
 		934B5DC8256D8F7600AC529C /* Ext-UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext-UIView.swift"; sourceTree = "<group>"; };
 		9351F0B22572F32A0009A798 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		9363831E25C133F6003285EC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../../../Desktop/Readme/LICENSE; sourceTree = "<group>"; };
+		9363834125C28E44003285EC /* BeaconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
 		93643B1325675A9E00027DE6 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		93643B3D256A066E00027DE6 /* PulseGraphic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseGraphic.swift; sourceTree = "<group>"; };
 		93643B45256A0C6A00027DE6 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				93AE8F5D255F899D00C859B6 /* ViewController.swift */,
+				9363834125C28E44003285EC /* BeaconManager.swift */,
 				93643B3D256A066E00027DE6 /* PulseGraphic.swift */,
 				9351F0B22572F32A0009A798 /* AlertManager.swift */,
 			);
@@ -217,6 +220,7 @@
 				934B5DC9256D8F7600AC529C /* Ext-UIView.swift in Sources */,
 				9351F0B32572F32A0009A798 /* AlertManager.swift in Sources */,
 				93643B46256A0C6A00027DE6 /* Constant.swift in Sources */,
+				9363834225C28E45003285EC /* BeaconManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

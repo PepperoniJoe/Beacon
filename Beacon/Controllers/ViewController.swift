@@ -34,7 +34,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupBeacon()
         setupPulse(view: beaconSignalButton)
-     //   setupSVG()
         peripheralManager.delegate = self
     }
     
@@ -103,7 +102,7 @@ class ViewController: UIViewController {
     /// Stop advertising
     func stopAdvertising() {
         
-        labelBeacon.text = K.nothing
+        labelBeacon.text = K.start
         
         if pulseGraphic.pulse.isAnimating() == true {
             pulseGraphic.stop()

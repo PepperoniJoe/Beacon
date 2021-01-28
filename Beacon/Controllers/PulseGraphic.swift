@@ -9,26 +9,16 @@ import UIKit
 class PulseGraphic: CAReplicatorLayer {
     
     let pulse = CALayer()
-
+    
     var numPulse: Int = 1 {
         didSet {
+            numPulse = numPulse < 1 ? 1 : numPulse
             instanceCount = numPulse
-            updateInstanceDelay()
         }
     }
     
     var radius: CGFloat = 60
-    var animationDuration: TimeInterval = K.animationDuration
-    
-    //MARK: - Private Properties
-    private var animationGroup: CAAnimationGroup!
-    private var alpha: CGFloat = 0.45
-    private let screenScale = UIScreen.main.scale
-    private let applicationWillBecomeActiveNotfication = UIApplication.willEnterForegroundNotification
-    private let applicationDidResignActiveNotification = UIApplication.didEnterBackgroundNotification
-    private weak var prevSuperlayer: CALayer?
-    private var prevLayerIndex: Int?
-    private var animationCompletionBlock: (() -> ())?
+    var animationDuration: TimeInterval = 5
     
     override var backgroundColor: CGColor? {
         didSet {
@@ -38,7 +28,6 @@ class PulseGraphic: CAReplicatorLayer {
         }
     }
     
-    
     override var repeatCount: Float {
         didSet {
             if let animationGroup = animationGroup {
@@ -47,40 +36,30 @@ class PulseGraphic: CAReplicatorLayer {
         }
     }
     
-
-    /// If this property is `true`, the instance will be automatically removed
-    /// from the superview, when it finishes the animation.
-    private var autoRemove = true
-    
-    /// fromValue for radius
-    /// It must be smaller than 1.0
-    private var fromValueForRadius: Float = 0.0 {
-        didSet {
-            if fromValueForRadius >= 1.0 {
-                fromValueForRadius = 0.0
-            }
-          //  recreate()
-        }
-    }
-    
-    private var keyTimeForHalfOpacity: Float = 0.2
-    private var pulseInterval: TimeInterval = 0
+    //MARK: - Private Properties
+    private let pulseInterval: TimeInterval = 0
+    private var animationGroup: CAAnimationGroup!
+    private var alpha: CGFloat = 0.45
+    private let screenScale = UIScreen.main.scale
+    private let applicationWillBecomeActiveNotfication = UIApplication.willEnterForegroundNotification
+    private let applicationDidResignActiveNotification = UIApplication.didEnterBackgroundNotification
+    private weak var prevSuperlayer: CALayer?
+    private var prevLayerIndex: Int?
     
     /// A function describing a timing curve of the animation.
-    private var timingFunction: CAMediaTimingFunction? = CAMediaTimingFunction(name: .default) {
-        didSet {
-            if let animationGroup = animationGroup {
-                animationGroup.timingFunction = timingFunction
-            }
-        }
-    }
-    
+//    private var timingFunction: CAMediaTimingFunction? = CAMediaTimingFunction(name: .default) {
+//        didSet {
+//            if let animationGroup = animationGroup {
+//                animationGroup.timingFunction = timingFunction
+//            }
+//        }
+//    }
     
     /// The value of this property showed a pulse is started
-    private var isPulsating: Bool {
-        guard let keys = pulse.animationKeys() else { return false }
-        return keys.count > 0
-    }
+//    private var isPulsating: Bool {
+//        guard let keys = pulse.animationKeys() else { return false }
+//        return keys.count > 0
+//    }
     
     
     // MARK: - Initializers
@@ -89,10 +68,8 @@ class PulseGraphic: CAReplicatorLayer {
         super.init()
         
         setupPulse()
-        
         instanceDelay = 1
         repeatCount = MAXFLOAT
-        backgroundColor = UIColor(named: K.defaultColor)?.cgColor
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(save),
@@ -126,12 +103,12 @@ class PulseGraphic: CAReplicatorLayer {
     
     @objc func save() {
         prevSuperlayer = superlayer
-        prevLayerIndex = prevSuperlayer?.sublayers?.firstIndex(where: {$0 === self})
+        prevLayerIndex = prevSuperlayer?.sublayers?.firstIndex(where: { $0 === self })
     }
 
     
     @objc func resume() {
-        
+
         if let prevSuperlayer = prevSuperlayer, let prevLayerIndex = prevLayerIndex {
             prevSuperlayer.insertSublayer(self, at: UInt32(prevLayerIndex))
         }
@@ -175,23 +152,20 @@ class PulseGraphic: CAReplicatorLayer {
     
     private func setupAnimationGroup() {
         let scaleAnimation = CABasicAnimation(keyPath: K.scaleXY)
-        scaleAnimation.fromValue = fromValueForRadius
+        scaleAnimation.fromValue = 0.0
         scaleAnimation.toValue   = 1.0
         scaleAnimation.duration  = animationDuration
         
         let opacityAnimation = CAKeyframeAnimation(keyPath: K.opacity)
         opacityAnimation.duration = animationDuration
         opacityAnimation.values   = [alpha, alpha * 0.5, 0.0]
-        opacityAnimation.keyTimes = [0.0, NSNumber(value: keyTimeForHalfOpacity), 1.0]
+        opacityAnimation.keyTimes = [0.0, NSNumber(value: 0.1), 1.0]
         
         animationGroup = CAAnimationGroup()
-        animationGroup.animations  = [scaleAnimation, opacityAnimation]
-        animationGroup.duration    = animationDuration + pulseInterval
-        animationGroup.repeatCount = repeatCount
-        
-        if let timingFunction = timingFunction {
-            animationGroup.timingFunction = timingFunction
-        }
+        animationGroup.animations     = [scaleAnimation, opacityAnimation]
+        animationGroup.duration       = animationDuration
+        animationGroup.repeatCount    = repeatCount
+        animationGroup.timingFunction = CAMediaTimingFunction(name : .default)
         
         animationGroup.delegate = self
     }
@@ -208,13 +182,6 @@ class PulseGraphic: CAReplicatorLayer {
         pulse.backgroundColor = backgroundColor
     }
     
-    
-    private func updateInstanceDelay() {
-        /// division-by-zero check
-        guard numPulse >= 1 else { fatalError() }
-        instanceDelay = (animationDuration + pulseInterval) / Double(numPulse)
-    }
-
 } // end of PulseGraphic
 
 
@@ -227,11 +194,5 @@ extension PulseGraphic: CAAnimationDelegate {
         }
         
         pulse.removeFromSuperlayer()
-        
-        if autoRemove {
-            removeFromSuperlayer()
-        }
-        
-        animationCompletionBlock?()
     }
 }

@@ -38,13 +38,13 @@ struct K {
     
     /// Pulse Settings
     static let transmitting      = "Transmitting"
-    static let nothing           = ""
+    static let start             = "START"
     static let pulseAnimationKey = "pulse"
     static let opacity           = "opacity"
     static let scaleXY           = "transform.scale.xy"
-    static let numPulse          = 10
+    static let numPulse          = 9
     static let radius : CGFloat  = 300
-    static let animationDuration : TimeInterval = 6
+    static let animationDuration : TimeInterval = 8
 }
 
 
