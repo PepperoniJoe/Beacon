@@ -4,12 +4,12 @@
 [![Language](https://img.shields.io/badge/swift-iOS14-orange.svg)](https://developer.apple.com/xcode/swift)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://mit-license.org)
 
-An example iOS app to turn an iOS device into an iBeacon that can be detected by beacon detecting apps.
+An example iOS app to turn an iOS device into an iBeacon that can be detected by other beacon detecting apps.
 
 <img src="GitHub-Images/Beacon.png" width="300">
 
 **Technical Info:** \
-Xcode 12 project written in Swift 5 for iOS 14\
+Xcode 12 project written in Swift 4.2 for iOS 12 and later\
 Swift, CoreBluetooth, CoreLocation, UIKit, CAReplicatorLayer\
 
 **See Also:** \
