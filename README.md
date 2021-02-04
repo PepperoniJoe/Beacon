@@ -10,7 +10,12 @@ An example iOS app to turn an iOS device into an iBeacon that can be detected by
 
 **Technical Info:** \
 Xcode 12 project written in Swift 4.2 for iOS 12 and later\
-Swift, CoreBluetooth, CoreLocation, UIKit, CAReplicatorLayer\
+Swift, CoreBluetooth, CoreLocation, UIKit, CAReplicatorLayer
+
+Created for devices running iOS 12 and later so that older phones can be used as beacons.\
+The app allows the phone to operate as a beacon and allows the app to change beacon settings.\
+
+The app was designed to work with the Beacon Detector app. 
 
 **See Also:** \
 [Quickies - a variety of example iOS apps](https://github.com/PepperoniJoe/Quickies)\
