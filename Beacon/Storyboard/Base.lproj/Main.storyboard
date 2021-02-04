@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -76,20 +77,20 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Major" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yhJ-1N-HBx">
                                                         <rect key="frame" x="0.0" y="80" width="80" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" name="DefaultColor2"/>
+                                                        <color key="textColor" name="DefaultColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minor" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4Mp-o7-NA4">
                                                         <rect key="frame" x="0.0" y="120" width="80" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" name="DefaultColor2"/>
+                                                        <color key="textColor" name="DefaultColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-Av-HeC">
                                                 <rect key="frame" x="91" y="0.0" width="2" height="160"/>
-                                                <color key="backgroundColor" name="DefaultColor2"/>
+                                                <color key="backgroundColor" name="DefaultColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="2" id="RK8-5W-4N7"/>
                                                 </constraints>
@@ -103,13 +104,13 @@
                                                             <constraint firstAttribute="height" constant="40" id="Ac6-nq-7M1"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" name="DefaultColor2"/>
+                                                        <color key="textColor" name="DefaultColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fW-ez-dbt">
                                                         <rect key="frame" x="0.0" y="40" width="300" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" name="DefaultColor2"/>
+                                                        <color key="textColor" name="DefaultColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Unk-jI-4yy">
@@ -143,7 +144,7 @@
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCx-ya-bNm">
                                         <rect key="frame" x="0.0" y="166" width="404" height="6"/>
-                                        <color key="backgroundColor" name="DefaultColor2"/>
+                                        <color key="backgroundColor" name="DefaultColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="6" id="Efc-u8-AIh"/>
                                         </constraints>
@@ -159,7 +160,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Ffi-nf-SJg" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-60" id="2hh-ES-WXD"/>
                             <constraint firstItem="aHG-0F-7vd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="35" id="2sZ-Xt-eig"/>
@@ -193,8 +194,8 @@
         <namedColor name="DefaultColor">
             <color red="0.0" green="0.43799999356269836" blue="0.5130000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="DefaultColor2">
-            <color red="0.0" green="0.43799999356269836" blue="0.5130000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

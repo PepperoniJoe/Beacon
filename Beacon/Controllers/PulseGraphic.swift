@@ -9,22 +9,10 @@ import UIKit
 class PulseGraphic: CAReplicatorLayer {
     
     let pulse = CALayer()
-    
-    var numPulse: Int = 1 {
-        didSet {
-            numPulse = numPulse < 1 ? 1 : numPulse
-            instanceCount = numPulse
-        }
-    }
-    
-    var radius: CGFloat = 60
-    var animationDuration: TimeInterval = 5
-    
+  
     override var backgroundColor: CGColor? {
         didSet {
             pulse.backgroundColor = backgroundColor
-            guard let backgroundColor = backgroundColor else {return}
-            alpha = backgroundColor.alpha
         }
     }
     
@@ -37,55 +25,31 @@ class PulseGraphic: CAReplicatorLayer {
     }
     
     //MARK: - Private Properties
-    private let pulseInterval: TimeInterval = 0
-    private var animationGroup: CAAnimationGroup!
-    private var alpha: CGFloat = 0.45
-    private let screenScale = UIScreen.main.scale
-    private let applicationWillBecomeActiveNotfication = UIApplication.willEnterForegroundNotification
-    private let applicationDidResignActiveNotification = UIApplication.didEnterBackgroundNotification
-    private weak var prevSuperlayer: CALayer?
-    private var prevLayerIndex: Int?
-    
-    /// A function describing a timing curve of the animation.
-//    private var timingFunction: CAMediaTimingFunction? = CAMediaTimingFunction(name: .default) {
-//        didSet {
-//            if let animationGroup = animationGroup {
-//                animationGroup.timingFunction = timingFunction
-//            }
-//        }
-//    }
-    
-    /// The value of this property showed a pulse is started
-//    private var isPulsating: Bool {
-//        guard let keys = pulse.animationKeys() else { return false }
-//        return keys.count > 0
-//    }
-    
+    private var animationGroup      : CAAnimationGroup!
+    private weak var prevSuperlayer : CALayer?
+    private var prevLayerIndex      : Int?
     
     // MARK: - Initializers
     
     override init() {
         super.init()
-        
         setupPulse()
-        instanceDelay = 1
-        repeatCount = MAXFLOAT
+        backgroundColor = UIColor(named : K.defaultColor)?.cgColor
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(save),
-                                               name: applicationDidResignActiveNotification,
+                                               name: UIApplication.didEnterBackgroundNotification,
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(resume),
-                                               name: applicationWillBecomeActiveNotfication,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
     
     override init(layer: Any) {
         super.init(layer: layer)
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
@@ -106,7 +70,6 @@ class PulseGraphic: CAReplicatorLayer {
         prevLayerIndex = prevSuperlayer?.sublayers?.firstIndex(where: { $0 === self })
     }
 
-    
     @objc func resume() {
 
         if let prevSuperlayer = prevSuperlayer, let prevLayerIndex = prevLayerIndex {
@@ -122,7 +85,6 @@ class PulseGraphic: CAReplicatorLayer {
         }
     }
     
-    
     /// Start the animation.
     func start() {
         
@@ -133,52 +95,46 @@ class PulseGraphic: CAReplicatorLayer {
         pulse.add(animationGroup, forKey: K.pulseAnimationKey)
     }
     
-    
     /// Stop the animation.
     func stop() {
         pulse.removeAllAnimations()
         animationGroup = nil
     }
     
-    
     // MARK: - Private Methods
     private func setupPulse() {
-        pulse.contentsScale = screenScale
-        pulse.opacity = 0
+        instanceDelay       = K.instanceDelay
+        repeatCount         = K.repeatMax
+        instanceCount       = K.numPulse
+        pulse.contentsScale = UIScreen.main.scale
+        pulse.opacity       = 0
         addSublayer(pulse)
         updatePulse()
     }
     
-    
     private func setupAnimationGroup() {
         let scaleAnimation = CABasicAnimation(keyPath: K.scaleXY)
-        scaleAnimation.fromValue = 0.0
-        scaleAnimation.toValue   = 1.0
-        scaleAnimation.duration  = animationDuration
+        scaleAnimation.fromValue = K.scaleAnimationFrom
+        scaleAnimation.toValue   = K.scaleAnimationTo
+        scaleAnimation.duration  = K.animationDuration
         
         let opacityAnimation = CAKeyframeAnimation(keyPath: K.opacity)
-        opacityAnimation.duration = animationDuration
-        opacityAnimation.values   = [alpha, alpha * 0.5, 0.0]
-        opacityAnimation.keyTimes = [0.0, NSNumber(value: 0.1), 1.0]
+        opacityAnimation.duration = K.animationDuration
+        opacityAnimation.values   = [K.alpha, K.alpha * 0.5, 0.0]
+        opacityAnimation.keyTimes = K.keyValues
         
         animationGroup = CAAnimationGroup()
         animationGroup.animations     = [scaleAnimation, opacityAnimation]
-        animationGroup.duration       = animationDuration
+        animationGroup.duration       = K.animationDuration
         animationGroup.repeatCount    = repeatCount
         animationGroup.timingFunction = CAMediaTimingFunction(name : .default)
-        
-        animationGroup.delegate = self
+        animationGroup.delegate       = self
     }
     
-    
     private func updatePulse() {
-        
-        let diameter: CGFloat = radius * 2
-       
-        pulse.bounds = CGRect(
-            origin: CGPoint.zero,
-            size: CGSize(width: diameter, height: diameter))
-        pulse.cornerRadius = radius
+        let diameter: CGFloat = K.radius * 2
+        pulse.bounds          = CGRect(origin: CGPoint.zero, size: CGSize(width: diameter, height: diameter))
+        pulse.cornerRadius    = K.radius
         pulse.backgroundColor = backgroundColor
     }
     
