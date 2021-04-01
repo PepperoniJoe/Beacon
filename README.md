@@ -8,16 +8,19 @@ An example iOS app to turn an iOS device into an iBeacon that can be detected by
 
 <img src="GitHub-Images/Beacon.png" width="300">
 
+**Description:** \
+The app allows the iOS device to operate as 1 of 12 iBeacons which can be switched via the app. 
+This example app works with its [Beacon Detector](https://github.com/PepperoniJoe/BeaconDetector) companion app. The companion app displays art
+information when in range of a corresponding iBeacon. This app acts as any those iBeacons.   
+
 **Technical Info:** \
 Xcode 12 project written in Swift 4.2 for iOS 12 and later\
 Swift, CoreBluetooth, CoreLocation, UIKit, CAReplicatorLayer
 
-Created for devices running iOS 12 and later so that older phones can be used as beacons.\
-The app allows the phone to operate as a beacon and allows the app to change beacon settings.
-
-This app has a companion app [Beacon Detector](https://github.com/PepperoniJoe/BeaconDetector) which responds to this app's beacon.
+Created for devices running iOS 12.4 and later so that both older and newer phones can be used as iBeacon transmitters.
 
 **See Also:** \
+[Beacon Detector - a museum app that displays art information when near a specific iBeacon](https://github.com/PepperoniJoe/BeaconDetector)\
 [Quickies - a variety of example iOS apps](https://github.com/PepperoniJoe/Quickies)\
  [Make Icons Swiftly - used to generate app icon sets
  ](https://github.com/PepperoniJoe/Make-Icons-Swiftly)
