@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9311D22A26157B7E008192E0 /* Beacon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9311D22926157B7E008192E0 /* Beacon.png */; };
 		933945B4256F351B00363788 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 933945B3256F351B00363788 /* Color.xcassets */; };
 		934B5DC9256D8F7600AC529C /* Ext-UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934B5DC8256D8F7600AC529C /* Ext-UIView.swift */; };
 		9351F0B32572F32A0009A798 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9351F0B22572F32A0009A798 /* AlertManager.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9311D22926157B7E008192E0 /* Beacon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Beacon.png; sourceTree = "<group>"; };
 		933945B3256F351B00363788 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		934B5DC8256D8F7600AC529C /* Ext-UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext-UIView.swift"; sourceTree = "<group>"; };
 		9351F0B22572F32A0009A798 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 		9363832425C13477003285EC /* GitHub-Images */ = {
 			isa = PBXGroup;
 			children = (
+				9311D22926157B7E008192E0 /* Beacon.png */,
 			);
 			path = "GitHub-Images";
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93643B1425675A9E00027DE6 /* LaunchScreen.storyboard in Resources */,
+				9311D22A26157B7E008192E0 /* Beacon.png in Resources */,
 				933945B4256F351B00363788 /* Color.xcassets in Resources */,
 				93AE8F63255F899E00C859B6 /* Assets.xcassets in Resources */,
 				93AE8F61255F899D00C859B6 /* Main.storyboard in Resources */,
